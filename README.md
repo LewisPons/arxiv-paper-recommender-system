@@ -1,12 +1,13 @@
-arxiv-paper-recommender
+Arxiv ML Paper Recommender
 ==============================
 
 ## Table of Contents
 
-- [arxiv-paper-recommender](#arxiv-paper-recommender)
+- [Arxiv ML Paper Recommender](#arxiv-ml-paper-recommender)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
   - [Installation](#installation)
+  - [DVC-Setup](#dvc-setup)
   - [Dataset](#dataset)
   - [Model Architecture](#model-architecture)
   - [Results](#results)
@@ -38,6 +39,13 @@ To install and set up the ML Paper Recommendation System, follow these steps:
    ```bash
    pip install -r requirements.txt
    ```
+
+## DVC-Setup
+If not familiarized to DVC, please read this [User guide](https://dvc.org/doc/user-guide).
+
+#https://drive.google.com/drive/folders/1FLhlVWaxRpJhlXH8SwJOtIjGPQ8uCm5T?usp=sharing
+dvc remote add myremote gdrive://1FLhlVWaxRpJhlXH8SwJOtIjGPQ8uCm5T
+
 
 ## Dataset
 The AI & ML Paper Recommendation System utilizes a corpus of summaries of ML/AI papers as the training dataset. [This dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) contains paper titles, paper abstracts, and their subject categories collected from the arXiv portal.
