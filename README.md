@@ -9,6 +9,7 @@ Arxiv ML Paper Recommender
   - [Installation](#installation)
   - [DVC-Setup](#dvc-setup)
     - [Authorization](#authorization)
+    - [Easy Approach for testing data](#easy-approach-for-testing-data)
   - [Dataset](#dataset)
   - [Model Architecture](#model-architecture)
   - [Results](#results)
@@ -60,7 +61,17 @@ See https://dvc.org/doc/user-guide/data-management/remote-storage/google-drive#a
 
 For more details about setting up DVC GDrive storage click [this link](https://blog.devgenius.io/how-to-connect-dvc-to-google-drive-remote-storage-to-store-and-version-your-data-64db2fad73ad)
 
-
+### Easy Approach for testing data
+If the DVC Setup is not a desired approach, you can manually download the Dataset from this [this Kaggle dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) into the `raw` subfolder.
+```bash
+data
+├── external
+├── interim
+├── processed
+└── raw
+    ├── arxiv_data.csv
+    └── arxiv_data_210930-054931.csv
+```
 
 ## Dataset
 The AI & ML Paper Recommendation System utilizes a corpus of summaries of ML/AI papers as the training dataset. [This dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) contains paper titles, paper abstracts, and their subject categories collected from the arXiv portal.
