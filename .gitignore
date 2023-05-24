@@ -89,4 +89,6 @@ target/
 .mypy_cache/
 
 # virtual arxiv-env
-/arxiv-env/
+/arxiv-env
+/data
+arxiv-env/

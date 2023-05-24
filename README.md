@@ -8,6 +8,7 @@ Arxiv ML Paper Recommender
   - [Overview](#overview)
   - [Installation](#installation)
   - [DVC-Setup](#dvc-setup)
+    - [Authorization](#authorization)
   - [Dataset](#dataset)
   - [Model Architecture](#model-architecture)
   - [Results](#results)
@@ -31,20 +32,34 @@ To install and set up the ML Paper Recommendation System, follow these steps:
 
 2. Set up the Python virtual environment:
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+   python3 -m venv arxiv-env
+   source arxiv-env/bin/activate
    ```
 
 3. Install the required dependencies:
    ```bash
-   pip install -r requirements.txt
+   pip3 install -r requirements.txt
    ```
 
 ## DVC-Setup
 If not familiarized to DVC, please read this [User guide](https://dvc.org/doc/user-guide).
 
-#https://drive.google.com/drive/folders/1FLhlVWaxRpJhlXH8SwJOtIjGPQ8uCm5T?usp=sharing
-dvc remote add myremote gdrive://1FLhlVWaxRpJhlXH8SwJOtIjGPQ8uCm5T
+### Authorization
+See https://dvc.org/doc/user-guide/data-management/remote-storage/google-drive#authorization for further details.
+
+1. Add the remote GStorage bucket
+   ```bash
+   dvc remote add --default drive gdrive://{ask_the_bucket_ownert_the_key}
+   ```
+
+2. Run
+   ```bash
+   dvc remote modify drive gdrive_acknowledge_abuse true
+   pip install dvc_gdriv
+   ```
+
+For more details about setting up DVC GDrive storage click [this link](https://blog.devgenius.io/how-to-connect-dvc-to-google-drive-remote-storage-to-store-and-version-your-data-64db2fad73ad)
+
 
 
 ## Dataset
