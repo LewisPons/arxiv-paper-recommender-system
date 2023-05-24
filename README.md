@@ -10,7 +10,7 @@ arxiv-paper-recommender
   - [Dataset](#dataset)
   - [Model Architecture](#model-architecture)
   - [Results](#results)
-  - [Project Organization](#project-organization)
+- [Project Organization](#project-organization)
 
 ## Overview
 
@@ -24,8 +24,8 @@ To install and set up the ML Paper Recommendation System, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/repo.git
-   cd repo
+   git clone https://github.com/LewisPons/arxiv-paper-recommender-system.git
+   cd arxiv-paper-recommender
    ```
 
 2. Set up the Python virtual environment:
@@ -40,9 +40,7 @@ To install and set up the ML Paper Recommendation System, follow these steps:
    ```
 
 ## Dataset
-The ML Paper Recommendation System utilizes a corpus of summaries of ML/AI papers as the training dataset. The dataset should be in a specific format, with each summary paired with the corresponding paper metadata such as title, authors, and publication details.
-
-The dataset can be obtained from [source URL or instructions on how to acquire it]. Please refer to the dataset documentation for more details on its structure and format.
+The AI & ML Paper Recommendation System utilizes a corpus of summaries of ML/AI papers as the training dataset. [This dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) contains paper titles, paper abstracts, and their subject categories collected from the arXiv portal.
 
 -----
 
@@ -55,20 +53,13 @@ For more detailed information about the model architecture and implementation, p
 
 
 ## Results
-The ML Paper Recommendation System has been evaluated on various datasets and achieved promising results. The performance metrics such as precision, recall, and F1 score indicate the effectiveness of the recommendation system in suggesting relevant ML/AI papers based on the input summaries.
-
-To review the detailed results and evaluation metrics, refer to [file or section in the repository containing the results].
-
------
+[Results in this section]
 
 
 
 
+# Project Organization
 
-
-
-Project Organization
-------------
 
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data` or `make train`
@@ -116,5 +107,5 @@ Project Organization
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 ****
 
---------
+
 
