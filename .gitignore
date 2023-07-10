@@ -77,7 +77,10 @@ target/
 
 # exclude data from source control by default
 /data/
-/models
+/models/GrammarGuru/
+/models/LanguageLiberator/
+/models/SemanticSherlock/
+/models/TextualTango/
 
 # Mac OS-specific storage files
 .DS_Store
