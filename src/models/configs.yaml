@@ -1,0 +1,18 @@
+
+GensimConfig:
+  Large:
+    ModelName: SemanticSherlock
+    DataSetFracSplit: null
+    RandomSeedSplit: null
+  SubLarge:
+    ModelName: LanguageLiberator
+    DataSetFracSplit: 0.75
+    RandomSeedSplit: 98765
+  Medium:
+    ModelName: TextualTango
+    DataSetFracSplit: 0.5
+    RandomSeedSplit: 42355
+  Small:
+    ModelName: GrammarGuru
+    DataSetFracSplit: 0.25
+    RandomSeedSplit: 76438
