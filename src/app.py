@@ -3,6 +3,8 @@ from streamlit_extras.no_default_selectbox import selectbox
 import pandas as pd
 from PIL import Image
 from random import choices
+import zipfile
+import os
 
 from gensim.corpora import Dictionary
 from gensim.models import TfidfModel
@@ -13,6 +15,27 @@ from models.utils.mlutilities import gensim_tokenizer, get_recomendations_metada
 
 
 st.set_page_config(page_title="Papers Recomendation App")
+
+model_name = "GrammarGuru"
+
+def folder_exists(folder_path):
+    if os.path.exists(folder_path) and os.path.isdir(folder_path):
+        return True
+    else:
+        return False
+
+
+
+def unzip_file(zip_file_path: str, modelname: str = model_name):
+    if not folder_exists(f"models/{modelname}"):
+        try:
+            with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+                zip_ref.extractall(f"models/")
+            st.write("Model Zip file Extraction completed!.")
+        except FileNotFoundError:
+            raise("Error: The specified zip file was not found.")
+        except zipfile.BadZipFile:
+            raise("Error: The specified file is not a valid zip file.")
 
 
 hide_default_format = """
@@ -35,17 +58,17 @@ st.title("ResearchRadar")
 def load_papers_corpus(path: str):
     return pd.read_parquet(path)
 
-@st.cache_data
+@st.cache_resource
 def load_dict(path: str):
     dict_corpus = Dictionary.load(path)
     return dict_corpus
 
-@st.cache_data
+@st.cache_resource
 def load_model(path: str ):
     tfidf_model = TfidfModel.load(path)
     return tfidf_model
 
-@st.cache_data
+@st.cache_resource
 def load_sparse_matrix(path: str):
     similarities = SparseMatrixSimilarity.load(path)
     return similarities
@@ -81,8 +104,14 @@ if app_mode == "Generate Recomendations":
         """
         st.markdown(examples)
         st.divider()
+    
+    
+    with st.spinner('The model binaries are unziping ...'):
+        zip_file_path = "models/GrammarGuru.zip"
+        unzip_file(zip_file_path)            
 
     with st.spinner('The model binaries are loading, please wait...'):
+
         df = load_papers_corpus("models/GrammarGuru/data/GrammarGuru.parquet.gzip") 
         dictionary = load_dict("models/GrammarGuru/dictionaries/GrammarGuru.dict") 
         model = load_model("models/GrammarGuru/tdidf/GrammarGuru.model") 
