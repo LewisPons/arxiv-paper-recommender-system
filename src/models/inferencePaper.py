@@ -1,86 +1,66 @@
-import pandas as pd
-from gensim.corpora import Dictionary
-from gensim.similarities import SparseMatrixSimilarity
-from gensim.models import TfidfModel
-from gensim.parsing import strip_tags, strip_numeric, \
-    strip_multiple_whitespaces, strip_punctuation, \
-    remove_stopwords, preprocess_string
-
+"""
+This script contains the logic for streamlit to generate inferences.
+Example:    
+python3 ./src/models/paperRecommender.py --modelsize GrammarGuru
+"""
 import argparse
-from typing import List
-from re import sub
 from random import choice
-from utils.constants import user_requests_tests
+from utils.constants import user_requests_tests, TEST_INPUTS
+from utils.mlutilities import get_recomendations_metadata,load_arxiv_parquet, load_model, load_dict, load_sparse_matrix
 import time
-from functools import cache
+
+args = parser.parse_args()
 
 
-if __name__ == "__main__":
-    """
-        Example: 
-        python script.py --samples 3000 --corpus_dictionary_path "30Ktokens.dict" --arxiv_datasr_path "/Users/luis.morales/Desktop/arxiv-paper-recommender/data/processed/reduced_arxiv_papers.parquet.gzip" --save_dict --query "your query here"
+query = args.query
+model_name = args.modelname
+n = args.n
 
-    """
-    # Define and parse command-line arguments
-    parser = argparse.ArgumentParser(description='ArXiv Paper Recommender CLI')
-    parser.add_argument('--query', default=None, type=str, help='User query')
-    parser.add_argument('--model', default=None, type=str, help='User query')
-    parser.add_argument('--discipline', default=None, type=str, help='User query')
-    args = parser.parse_args()
-
-    query = args.query
-    if args.query is None:
-        disciplines = ["Math", "Statistics", "Electrical Engineering", "QuantitativeBiology", "Economics"]
-        discipline = choice(disciplines)
-        query = choice(user_requests_tests[discipline])
-        
-    start = time.time()
-
-    @cache
-    def load_arxiv_parquet(path: str = "/Users/luis.morales/Desktop/arxiv-paper-recommender/data/processed/reduced_arxiv_papers.parquet.gzip"):
-        df = pd.read_parquet(path)
-        return df
-        
-    @cache  
-    def load_dict(path: str = "/Users/luis.morales/Desktop/arxiv-paper-recommender/models/dictionaries/LanguageLiberator.dict"):
-        dict_corpus = Dictionary.load(path)
-        return dict_corpus
+if args.query is None:
+    query = choice(TEST_INPUTS)
     
-    @cache
-    def load_model(path: str = "/Users/luis.morales/Desktop/arxiv-paper-recommender/models/tfidf/SemanticSherlock.model"):
-        tfidf_model = TfidfModel.load(path)
-        return tfidf_model
+if model_name is None:
+    raise Exception('Please Select a model name to use: ["SemanticSherlock", "LanguageLiberator", "TextualTango", "GrammarGuru"]')
     
-    @cache
-    def load_sparse_matrix(path: str = "/Users/luis.morales/Desktop/arxiv-paper-recommender/models/similarities_matrix/LanguageLiberatorSimilarities/LanguageLiberator"):
-        similarities = SparseMatrixSimilarity.load(path)
-        return similarities
-    
-    df = load_arxiv_parquet()
-    dict_corpus = load_dict()
-    similarities = load_sparse_matrix()
-    tfidf_model = load_model()
-    
-    results_df = get_recomendations_metadata(query=query, df=df, n=3, dictionary=dict_corpus, index=similarities, tfidf_model=tfidf_model)
+start = time.time()
+parent_folder = f"/Users/luis.morales/Desktop/arxiv-paper-recommender/models/{model_name}"
 
-    results = list(zip(
-        results_df['title'].to_list(), 
-        results_df['authors'].to_list(),  
-        results_df['categories'].to_list(),
-        results_df['abstract'].to_list()
-        )
+parquet_file = f"{parent_folder}/data/{model_name}.parquet.gzip"
+dictionary = f"{parent_folder}/dictionaries/{model_name}.dict"
+model = f"{parent_folder}/tdidf/{model_name}.model"
+sparse_matrix = f"{parent_folder}/similarities_matrix/{model_name}"
+
+
+df = load_arxiv_parquet(parquet_file)
+dict_corpus = load_dict(dictionary)
+similarities = load_sparse_matrix(sparse_matrix)
+tfidf_model = load_model(model)
+
+
+results_df = get_recomendations_metadata(query=query, df=df, n=n, dictionary=dict_corpus, index=similarities, tfidf_model=tfidf_model)
+
+results = list(zip(
+    results_df['title'].to_list(), 
+    results_df['authors'].to_list(),  
+    results_df['categories'].to_list(),
+    results_df['abstract'].to_list()
     )
+)
 
-    for abstract in results:
-        print(f"User Request ---- : \n {query}")
-        print(f"User Request Discipline: {discipline}")
-        print(f"--------------------------")
-        print(f"Title: {abstract[0]}")
-        print(f"Author: {abstract[1]}")
-        print(f"Categories: {abstract[2]}\n")
-        print(f"Abstract: {abstract[3]}\n")
-        print(f"--------------------------")
-    
-    end = time.time()
-    total_time = end - start
-    print(f"-------------- Execution Time: {total_time}")
+for abstract in results:
+    print(f"User Request ---- : \n {query}")
+    time.sleep(0.3)
+    print(f"--------------------------")
+    print(f"Title: {abstract[0]}")
+    time.sleep(0.3)
+    print(f"Author: {abstract[1]}")
+    time.sleep(0.3)
+    print(f"Categories: {abstract[2]}\n")
+    time.sleep(0.3)
+    print(f"Abstract: {abstract[3]}\n")
+    print(f"--------------------------")
+    time.sleep(1)
+
+end = time.time()
+total_time = end - start
+print(f"-------------- Execution Time: {total_time}")

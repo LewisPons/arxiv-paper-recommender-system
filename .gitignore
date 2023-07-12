@@ -81,6 +81,7 @@ target/
 /models/LanguageLiberator/
 /models/SemanticSherlock/
 /models/TextualTango/
+/models/*.zip
 
 # Mac OS-specific storage files
 .DS_Store

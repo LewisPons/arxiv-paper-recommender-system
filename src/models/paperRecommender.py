@@ -1,16 +1,18 @@
+"""
+This script is for testing in the CLI the paper Recommender
+    Example:    
+    python3 ./src/models/paperRecommender.py --modelsize GrammarGuru
+"""
 import argparse
 from random import choice
 from utils.constants import user_requests_tests, TEST_INPUTS
-from utils.mlutilities import get_recomendations_metadata,load_arxiv_parquet, load_model, load_dict, load_sparse_matrix
+from utils.mlutilities import get_recomendations_metadata,load_arxiv_parquet, load_model, load_dict, load_sparse_matrix, gensim_tokenizer
 import time
 
 
 
 if __name__ == "__main__":
-    """
-        Example:    
-        python3 ./src/models/paperRecommender.py --modelsize GrammarGuru
-    """
+
     # Define and parse command-line arguments
     parser = argparse.ArgumentParser(description='ArXiv Paper Recommender CLI')
     parser.add_argument('--query', default=None, type=str, help='User query')
@@ -26,7 +28,9 @@ if __name__ == "__main__":
     
     if args.query is None:
         query = choice(TEST_INPUTS)
-        
+    
+    query = gensim_tokenizer(query)
+    
     if model_name is None:
         raise Exception('Please Select a model name to use: ["SemanticSherlock", "LanguageLiberator", "TextualTango", "GrammarGuru"]')
         

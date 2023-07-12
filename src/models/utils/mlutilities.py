@@ -86,7 +86,7 @@ def get_closest_n(dictionary: Dictionary, index: SparseMatrixSimilarity, tfidf_m
 
 def get_recomendations_metadata(query: str, df: pd.DataFrame, n: int, 
                                 dictionary: Dictionary, index: SparseMatrixSimilarity, 
-                                tfidf_model : TfidfModel):
+                                tfidf_model : TfidfModel) -> pd.DataFrame:
     '''
     Retrieves metadata recommendations based on a query using cosine similarity.
 
