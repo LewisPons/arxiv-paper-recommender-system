@@ -108,6 +108,7 @@ def get_recomendations_metadata(query: str, df: pd.DataFrame, n: int,
     recommendations_metadata = recommendations_metadata.reset_index(drop=True)
     
     return recommendations_metadata
+    # return recommendations_idxs
 
 @cache
 def load_arxiv_parquet(path: str):
