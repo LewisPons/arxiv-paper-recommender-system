@@ -1,14 +1,14 @@
 """
 This script is for testing in the CLI the paper Recommender
     Example:    
-    python3 ./src/models/paperRecommender.py --modelsize GrammarGuru
+    python3 ./src/models/paperRecommender.py --modelname GrammarGuru
 """
 import argparse
 from random import choice
 from utils.constants import user_requests_tests, TEST_INPUTS
 from utils.mlutilities import get_recomendations_metadata,load_arxiv_parquet, load_model, load_dict, load_sparse_matrix, gensim_tokenizer
 import time
-
+import sys 
 
 
 if __name__ == "__main__":
@@ -30,12 +30,13 @@ if __name__ == "__main__":
         query = choice(TEST_INPUTS)
     
     query = gensim_tokenizer(query)
+    print(query)
     
     if model_name is None:
         raise Exception('Please Select a model name to use: ["SemanticSherlock", "LanguageLiberator", "TextualTango", "GrammarGuru"]')
         
     start = time.time()
-    parent_folder = f"/Users/luis.morales/Desktop/arxiv-paper-recommender/models/{model_name}"
+    parent_folder = f"models/{model_name}"
     
     parquet_file = f"{parent_folder}/data/{model_name}.parquet.gzip"
     dictionary = f"{parent_folder}/dictionaries/{model_name}.dict"
@@ -47,7 +48,7 @@ if __name__ == "__main__":
     dict_corpus = load_dict(dictionary)
     similarities = load_sparse_matrix(sparse_matrix)
     tfidf_model = load_model(model)
-
+    print("------ working")
     
     results_df = get_recomendations_metadata(query=query, df=df, n=n, dictionary=dict_corpus, index=similarities, tfidf_model=tfidf_model)
 

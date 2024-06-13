@@ -57,7 +57,13 @@ def cleaning_pipe(document):
     return processed_words
 
 
-def get_closest_n(dictionary: Dictionary, index: SparseMatrixSimilarity, tfidf_model : TfidfModel, query: str, n: int):
+def get_closest_n(
+        dictionary: Dictionary,
+        index: SparseMatrixSimilarity, 
+        tfidf_model : TfidfModel, 
+        query: str, 
+        n: int
+    ):
     '''
     Retrieves the top matching documents as per cosine similarity
     between the TF-IDF vector of the query and all documents.
@@ -84,9 +90,14 @@ def get_closest_n(dictionary: Dictionary, index: SparseMatrixSimilarity, tfidf_m
     return top_idx
 
 
-def get_recomendations_metadata(query: str, df: pd.DataFrame, n: int, 
-                                dictionary: Dictionary, index: SparseMatrixSimilarity, 
-                                tfidf_model : TfidfModel) -> pd.DataFrame:
+def get_recomendations_metadata(
+        query: str, 
+        df: pd.DataFrame, 
+        n: int, 
+        dictionary: Dictionary, 
+        index: SparseMatrixSimilarity, 
+        tfidf_model : TfidfModel
+    ) -> pd.DataFrame:
     '''
     Retrieves metadata recommendations based on a query using cosine similarity.
 

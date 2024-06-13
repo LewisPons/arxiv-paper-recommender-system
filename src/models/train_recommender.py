@@ -20,7 +20,7 @@ logging.basicConfig(
 )
 
 
-model_configurations = read_yaml_config("/Users/luis.morales/Desktop/arxiv-paper-recommender/src/models/configs.yaml")
+model_configurations = read_yaml_config("src/models/configs.yaml")
 
 
 if __name__ == "__main__":
@@ -56,18 +56,18 @@ if __name__ == "__main__":
     
     
     if dataset_fraq_split is None:
-        df = pd.read_parquet("/Users/luis.morales/Desktop/arxiv-paper-recommender/data/processed/reduced_arxiv_papers.parquet.gzip")
+        df = pd.read_parquet("data/processed/reduced_arxiv_papers.parquet.gzip")
         logging.info(f"The full text Corpus was readed.")
         
     else :
-        df = pd.read_parquet("/Users/luis.morales/Desktop/arxiv-paper-recommender/data/processed/reduced_arxiv_papers.parquet.gzip") \
+        df = pd.read_parquet("data/processed/reduced_arxiv_papers.parquet.gzip") \
             .sample(frac=dataset_fraq_split, random_state=random_seed) \
             .reset_index(drop=True)
         logging.info(f"A random split of {dataset_fraq_split}% was applied on the Text Corpus ")
     logging.info(f"Dimensions of the dataset: {df.shape}")
     
-    df.to_parquet(f"/Users/luis.morales/Desktop/arxiv-paper-recommender/models/data/{model_name}.parquet.gzip", compression='gzip')
-    logging.info(f"The Dataset used for this training was successfully saved in: `/Users/luis.morales/Desktop/arxiv-paper-recommender/models/data/{model_name}.parquet.gzip`.")
+    df.to_parquet(f"models/data/{model_name}.parquet.gzip", compression='gzip')
+    logging.info(f"The Dataset used for this training was successfully saved in: `models/data/{model_name}.parquet.gzip`.")
     
     
 
@@ -85,13 +85,13 @@ if __name__ == "__main__":
     logging.info(f"TD-IDF {model_name} Model was successfully trained.")
     
     
-    tfidf_model.save(f"/Users/luis.morales/Desktop/arxiv-paper-recommender/models/tfidf/{model_name}.model")
+    tfidf_model.save(f"models/tfidf/{model_name}.model")
     logging.info(f"Model: {model_name} was successfully saved.")
 
 
     index = SparseMatrixSimilarity(tfidf_model[BoW_corpus], num_features=len(dictionary))
     logging.info(f"The Similarities Sparse Matrix was successfully created.")
-    index.save(f"/Users/luis.morales/Desktop/arxiv-paper-recommender/models/similarities_matrix/{model_name}")
+    index.save(f"models/similarities_matrix/{model_name}")
     logging.info(f"The Similarities Matrix was successfully saved for the model: {model_name}.")
     
     end = time.time()
