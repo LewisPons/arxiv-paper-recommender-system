@@ -3,24 +3,52 @@ Arxiv ML Paper Recommender
 
 ## Table of Contents
 
-- [Arxiv ML Paper Recommender](#arxiv-ml-paper-recommender)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#overview)
-  - [Installation](#installation)
-  - [DVC-Setup](#dvc-setup)
+1. [Introduction](#introduction)
+2. [Key Components](#key-components)
+3. [Process Flow](#process-flow)
+4. [End-to-end Architecture](#end-to-end-architecture)
+5. [Getting Started](#getting-started)
+6. [Repository Setup](#repository-setup)
+    - [Clone the repository](#clone-the-repository)
+    - [Set up the Python virtual environment](#set-up-the-python-virtual-environment)
+    - [Install the required dependencies](#install-the-required-dependencies)
+7. [Local Setup](#local-setup)
+    - [DVC Setup](#dvc-setup)
     - [Authorization](#authorization)
-    - [Easy Approach for testing data](#easy-approach-for-testing-data)
-  - [Dataset](#dataset)
-  - [Model Architecture](#model-architecture)
-  - [Results](#results)
-- [Project Organization](#project-organization)
-
-## Overview
-
-This  Paper Recommendation System is a natural language processing (NLP) project that aims to build a recommendation system for machine learning (ML) and artificial intelligence (AI) papers. The system utilizes a trained model to recommend relevant papers based on the summaries of ML/AI papers. This repository contains the source code and resources necessary to develop, train, and evaluate the recommendation system.
+    - [Google Drive Setup](#google-drive-setup)
+8. [Dataset](#dataset)
+9. [Results](#results)
+10. [Project Organization](#project-organization)
 
 
-## Installation
+# Introduction
+
+Welcome to the Scientific Article Recommendation System repository. This project leverages machine learning and natural language processing techniques to streamline the search for relevant scientific content for researchers and professionals. By utilizing the TF-IDF algorithm for text vectorization and cosine similarity metrics, the system effectively suggests scientific articles based on user-provided prompts.
+
+## Key Components
+- Preprocessing of Data: Both the scientific corpus and the user prompt undergo preprocessing steps, including the removal of stop-words, punctuation, and special characters, followed by normalization, lemmatization, and tokenization.
+- Text Vectorization: Application of the TF-IDF algorithm to convert both the corpus and user prompt into numerical vectors.
+- Similarity Functions: Calculation of similarity metrics, primarily using cosine similarity, between the preprocessed and vectorized corpus and user prompt.
+Precomputed Similarities: Creation of a matrix with precomputed distances for efficient similarity computation.
+- Web Interface: A user-friendly interface hosted on Huggingface Spaces for easy interaction with the recommendation system.
+## Process Flow:
+- Input: The system accepts a corpus of scientific documents and a user-provided prompt.
+- Preprocessing: Both inputs are preprocessed to clean and prepare the text data.
+- Vectorization: TF-IDF is applied to convert text into vectors.
+- Similarity Calculation: Similarity functions are applied to determine the relevance of documents to the user prompt.
+- Recommendation Output: The system generates recommendations based on the similarity metrics and presents them via a web interface.
+
+The solution not only focuses on the recommendation engine but also emphasizes the creation of a user interface to facilitate easy and efficient personalized recommendations.
+
+## End-to-end Architecture
+The following figure illustrates the proposed recommendation system's workflow and extends it with additional modules for user interaction, prompt preprocessing, and web interface integration.
+![alt text](project-architecture.png)
+
+
+# Getting Started
+To get started with the Scientific Article Recommendation System, please refer to the following sections of this README for setup instructions, usage guidelines, and contribution details.
+
+## Repository Setup
 
 To install and set up the ML Paper Recommendation System, follow these steps:
 
@@ -41,8 +69,15 @@ To install and set up the ML Paper Recommendation System, follow these steps:
    ```bash
    pip3 install -r requirements.txt
    ```
+## Local Setup
 
-## DVC-Setup
+For this project to run locally you have to download a set of Parquet and Binaries files. There are two approaches:
+- Use DVC to setup all
+- Download manually the files
+
+Both approaches are explaned in the next sections.
+
+### DVC Setup
 If not familiarized to DVC, please read this [User guide](https://dvc.org/doc/user-guide).
 
 ### Authorization
@@ -61,35 +96,70 @@ See https://dvc.org/doc/user-guide/data-management/remote-storage/google-drive#a
 
 For more details about setting up DVC GDrive storage click [this link](https://blog.devgenius.io/how-to-connect-dvc-to-google-drive-remote-storage-to-store-and-version-your-data-64db2fad73ad)
 
-### Easy Approach for testing data
-If the DVC Setup is not a desired approach, you can manually download the Dataset from this [this Kaggle dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) into the `raw` subfolder.
+### Google Drive Setup
+If the DVC Setup is not working, you can manually download the Dataset and Model files from this [Google Drive Bucket](https://drive.google.com/drive/folders/1nv1Y_XMlQW4vnOD_S0cd0w-0FQXUHjfs?usp=sharing) into the `models` Folder ensuring following this structure.
 ```bash
-data
-├── external
-├── interim
-├── processed
-└── raw
-    ├── arxiv_data.csv
-    └── arxiv_data_210930-054931.csv
+models/
+├── GrammarGuru
+│   ├── data
+│   │   └── LanguageLiberator.parquet.gzip
+│   ├── dictionaries
+│   │   └── LanguageLiberator.dict
+│   ├── similarities_matrix
+│   │   ├── LanguageLiberator
+│   │   ├── LanguageLiberator.index.data.npy
+│   │   ├── LanguageLiberator.index.indices.npy
+│   │   ├── LanguageLiberator.index.indptr.npy
+│   │   └── LanguageLiberator.index.npy
+│   └── tdidf
+│       └── LanguageLiberator.model
+├── LanguageLiberator
+│   ├── data
+│   │   └── LanguageLiberator.parquet.gzip
+│   ├── dictionaries
+│   │   └── LanguageLiberator.dict
+│   ├── similarities_matrix
+│   │   ├── LanguageLiberator
+│   │   ├── LanguageLiberator.index.data.npy
+│   │   ├── LanguageLiberator.index.indices.npy
+│   │   ├── LanguageLiberator.index.indptr.npy
+│   │   └── LanguageLiberator.index.npy
+│   └── tdidf
+│       └── LanguageLiberator.model
+├── SemanticSherlock
+│   ├── data
+│   │   └── SemanticSherlock.parquet.gzip
+│   ├── dictionaries
+│   │   └── SemanticSherlock.dict
+│   ├── similarities_matrix
+│   │   ├── SemanticSherlock
+│   │   ├── SemanticSherlock.index.data.npy
+│   │   ├── SemanticSherlock.index.indices.npy
+│   │   ├── SemanticSherlock.index.indptr.npy
+│   │   └── SemanticSherlock.index.npy
+│   └── tdidf
+│       └── SemanticSherlock.model
+└── TextualTango
+    ├── data
+    │   └── TextualTango.parquet.gzip
+    ├── dictionaries
+    │   └── TextualTango.dict
+    ├── similarities_matrix
+    │   ├── TextualTango
+    │   ├── TextualTango.index.data.npy
+    │   ├── TextualTango.index.indices.npy
+    │   ├── TextualTango.index.indptr.npy
+    │   └── TextualTango.index.npy
+    └── tdidf
+        └── TextualTango.model
 ```
 
 ## Dataset
-The AI & ML Paper Recommendation System utilizes a corpus of summaries of ML/AI papers as the training dataset. [This dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) contains paper titles, paper abstracts, and their subject categories collected from the arXiv portal.
-
------
-
-## Model Architecture
-The ML Paper Recommendation System employs a state-of-the-art NLP model architecture for recommendation purposes. The architecture consists of [provide brief details about the model architecture].
-
-For more detailed information about the model architecture and implementation, please refer to the source code and documentation within the repository.
-
------
+The Recommendation System utilizes a corpus of summaries of STEM papers as the training dataset. [This dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) contains paper titles, paper abstracts, and their subject categories collected from the arXiv portal.
 
 
 ## Results
 [Results in this section]
-
-
 
 
 # Project Organization
