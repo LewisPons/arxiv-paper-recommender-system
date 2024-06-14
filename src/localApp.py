@@ -1,16 +1,16 @@
-import streamlit as st
-from streamlit_extras.no_default_selectbox import selectbox
-import pandas as pd
+from random import sample
 from PIL import Image
-from random import choices
+import pandas as pd
 import zipfile
 import os
 
+import streamlit as st
+from streamlit_extras.no_default_selectbox import selectbox
 from gensim.corpora import Dictionary
 from gensim.models import TfidfModel
 from gensim.similarities import SparseMatrixSimilarity
 
-from models.utils.constants import user_requests_tests, TEST_INPUTS
+from models.utils.constants import *
 from models.utils.mlutilities import gensim_tokenizer, get_recomendations_metadata
 
 
@@ -36,6 +36,18 @@ def unzip_file(zip_file_path: str, modelname: str = model_name):
             raise("Error: The specified zip file was not found.")
         except zipfile.BadZipFile:
             raise("Error: The specified file is not a valid zip file.")
+
+
+def generate_ramdom_examples(test_inputs, num_examples=4):
+    # Select num_examples random choices from the test_inputs list
+    selected_prompts = sample(test_inputs, num_examples)
+    
+    # Format the selected prompts into the desired string format
+    examples = '### Examples of prompts\n'
+    for prompt in selected_prompts:
+        examples += f'- "{prompt}"\n'
+    
+    return examples
 
 
 hide_default_format = """
@@ -94,13 +106,7 @@ if app_mode == "Generate Recomendations":
 
     
     with st.container():
-        examples = """
-        ### Examples of prompts
-        - "Can you recommend papers that explore the application of deep learning in computer vision for object detection, image segmentation, and video analysis?"
-        - "Can you recommend papers that explore the use of deep reinforcement learning for autonomous driving, including perception, planning, and control?"
-        - "Could you provide papers on image and video compression algorithms based on the latest video coding standards, such as HEVC and AV1?"
-        - "Can you suggest recent papers on behavioral economics that investigate the role of emotions and biases in decision-making under uncertainty, particularly in the context of financial markets?"
-        """
+        examples = generate_ramdom_examples(TEST_INPUTS)
         st.markdown(examples)
         # st.divider()
 
@@ -113,7 +119,7 @@ if app_mode == "Generate Recomendations":
     """
     st.markdown(model_details)
     
-    model_size = st.selectbox(
+    model_size = st.selectbox( 
         label='Select one Model Option:', 
         options=("GrammarGuru", "SemanticSherlock", "LanguageLiberator", "TextualTango"), 
         index=0
