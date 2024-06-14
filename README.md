@@ -16,9 +16,10 @@ Arxiv ML Paper Recommender
     - [DVC Setup](#dvc-setup)
     - [Authorization](#authorization)
     - [Google Drive Setup](#google-drive-setup)
-8. [Dataset](#dataset)
-9. [Results](#results)
-10. [Project Organization](#project-organization)
+8. [Run App](#run-app)
+9. [Dataset](#dataset)
+10. [Results](#results)
+1. [Project Organization](#project-organization)
 
 
 # Introduction
@@ -154,12 +155,21 @@ models/
         └── TextualTango.model
 ```
 
+## Run App
+Once the Python environment is already setled up, the needed libraries have been installed, and the Model Files have been intalled, to run the Steamlit App Locally just run on the terminal:
+
+```bash
+streamlit run src/localApp.py 
+```
+The web app will start to load and a browser tab will be open.
+
+> Note: The first time you are running this app, It will ask some permissions, accept them to allow the app run successfully.
+
+
+To quit the app, just press: `ctr - c`.git
+
 ## Dataset
 The Recommendation System utilizes a corpus of summaries of STEM papers as the training dataset. [This dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) contains paper titles, paper abstracts, and their subject categories collected from the arXiv portal.
-
-
-## Results
-[Results in this section]
 
 
 # Project Organization
