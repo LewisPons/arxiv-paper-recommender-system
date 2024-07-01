@@ -51,16 +51,18 @@ To get started with the Scientific Article Recommendation System, please refer t
 
 ## Repository Setup
 
-To install and set up the ML Paper Recommendation System, follow these steps:
 
-1. Clone the repository:
+There are two ways of setting this project up, one is by setting up docker container explained below and the other is by cloning the repo, and installing it's dependencies manually. I recommend using Docker as it is less prune to errors, but feel free to use the Approach You like more.
+
+
+First you need to clone the repository by running:
 
    ```bash
    git clone https://github.com/LewisPons/arxiv-paper-recommender-system.git
    cd arxiv-paper-recommender
    ```
 
-2. Set up the Python virtual environment:
+<!-- 2. Set up the Python virtual environment:
    ```bash
    python3 -m venv arxiv-env
    source arxiv-env/bin/activate
@@ -69,8 +71,8 @@ To install and set up the ML Paper Recommendation System, follow these steps:
 3. Install the required dependencies:
    ```bash
    pip3 install -r requirements.txt
-   ```
-## Local Setup
+   ``` -->
+### Files and Binaries Setup
 
 For this project to run locally you have to download a set of Parquet and Binaries files. There are two approaches:
 - Use DVC to setup all
@@ -155,7 +157,60 @@ models/
         └── TextualTango.model
 ```
 
-## Run App
+### Docker Setup
+
+Once the steps detailed in the `Files and Binaries Setup`, follow the steps below to build and run the Docker container.
+
+The main prequisite is having Docker installed on your machine. You can download and install Docker from [here](https://www.docker.com/get-started).
+
+1. Build the Docker image
+```bash
+docker build -t arxiv-paper-recommender-system .
+```
+
+2. Run the Dokcer image: 
+```bash
+docker run -p 8501:8501 arxiv-paper-recommender-system
+```
+
+This will start the Streamlit app, which will be accessible at http://localhost:8501.
+
+#### Stopping the Docker Container
+If you started the container in the foreground, you can stop it by pressing `Ctrl+C` in the terminal where it is running.
+
+If you started the container in detached mode, first list all running containers to find the container ID or name:
+
+```bash
+docker ps
+```
+
+Then, stop the container using its ID or name:
+```bash
+docker stop <container_id_or_name>
+```
+
+#### Cleaning Up
+To remove the stopped container, use:
+
+sh
+Copy code
+docker rm <container_id_or_name>
+To remove the Docker image, use:
+
+```sh
+docker rmi arxiv-paper-recommender-system
+```
+**Notes:**
+
+- Ensure that the requirements.txt file is present in the root directory of the repository, and it lists all the Python dependencies needed for the project.
+- Adjust the file paths and names in the Dockerfile and the commands above as necessary to match your specific repository structure.
+
+
+
+
+
+
+## Manual Setup
 Once the Python environment is already setled up, the needed libraries have been installed, and the Model Files have been intalled, to run the Steamlit App Locally just run on the terminal:
 
 ```bash
@@ -166,7 +221,7 @@ The web app will start to load and a browser tab will be open.
 > Note: The first time you are running this app, It will ask some permissions, accept them to allow the app run successfully.
 
 
-To quit the app, just press: `ctr - c`.git
+To quit the app, just press: `ctr - c`
 
 ## Dataset
 The Recommendation System utilizes a corpus of summaries of STEM papers as the training dataset. [This dataset](https://www.kaggle.com/datasets/spsayakpaul/arxiv-paper-abstracts) contains paper titles, paper abstracts, and their subject categories collected from the arXiv portal.
